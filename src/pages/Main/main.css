@@ -1,0 +1,57 @@
+.main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 700px;
+}
+
+.main .caption {
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    height: fit-content;
+    background-color:rgb(221, 221, 221);
+    border-radius: 5px;
+}
+
+.main .title {
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    height: fit-content;
+    padding-top: 20px;
+    align-items: center;
+}
+
+.main .title .headingText {
+    padding-left: 5px;
+    font-size: 20px;
+}
+
+.main .lastUpdatedWraper {
+    width: 90vw;
+    max-width: 500px;
+    height: fit-content;
+}
+
+.main .lastUpdatedWraper .lastUpdated {
+    float: right;
+    color:rgb(152, 152, 152);
+}
+
+.main .buttonGroup {
+    width: 70vw;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.main .textArea {
+    width: 95vw;
+    max-width: 500px;
+    background-color: lightgray;
+    margin-top: 10px;
+    user-select: none;
+    touch-action: auto;
+}
