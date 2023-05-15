@@ -20,7 +20,7 @@ useEffect(() => {
     まずは質問にすべて答えてください。
   `);
 
-  axios.get("http://localhost:3000/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+  axios.get("https://biography-line-bot.onrender.com/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
     if (result.status === 200){
       setTextData(result.data.msg);
     }
