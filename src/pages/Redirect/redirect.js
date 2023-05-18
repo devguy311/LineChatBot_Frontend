@@ -8,7 +8,7 @@ const RedirectPage = (props) => {
     const code = searchParams.get("code") || '';
     const {lineAccess, setLineAccess} = useLineAccess(code);
 
-    return <>ちょっと待てくださいよ。。。</>;
+    return <>AI自叙伝作動中。。。</>;
 };
 
 export default React.memo(RedirectPage);
