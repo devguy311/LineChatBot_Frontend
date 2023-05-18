@@ -7,9 +7,9 @@ import RedirectPage from './pages/Redirect/redirect';
 function App() {
   return (
     <Routes>
-      <Route exact path="/" element={<Home />}/>
-      <Route exact path='/main' element={<Main />}/>
-      <Route exact path='/redirect' element={<RedirectPage />}/>
+      <Route path="/" Component={Home}/>
+      <Route path='/main' Component={Main}/>
+      <Route path='/redirect' Component={RedirectPage}/>
     </Routes>
   );
 }
