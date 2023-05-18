@@ -11,4 +11,4 @@ const RedirectPage = (props) => {
     return <>AI自叙伝作動中。。。</>;
 };
 
-export default React.memo(RedirectPage);
+export default RedirectPage;
