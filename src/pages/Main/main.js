@@ -17,7 +17,7 @@ const Main = () => {
 
     // eslint-disable-next-line
     useEffect(() => {
-        axios.get("https://biography-line-bot.onrender.com/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+        axios.get("https://line-bot-server.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
                 setTextData(result.data.msg);
             }
@@ -27,7 +27,7 @@ const Main = () => {
     const handleEdit = () => {
 
         if (isEdit) {
-            axios.post('https://biography-line-bot.onrender.com/bio/updateBiography', { sub: token[3], bio: textData })
+            axios.post('https://line-bot-server.vercel.app/bio/updateBiography', { sub: token[3], bio: textData })
                 .then((response) => {
                     if (response.status === 200) {
                         console.log("!");
@@ -73,7 +73,7 @@ const Main = () => {
     }
 
     const refreshBio = () => {
-        axios.get("https://biography-line-bot.onrender.com/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+        axios.get("https://line-bot-server.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
                 setTextData(result.data.msg);
             }

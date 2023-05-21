@@ -12,7 +12,7 @@ const useLineAccess = (code) => {
     useEffect(() => {
         if (!loaded && code !== undefined && code !== null && code !== "") {
             loaded = true;
-            axios.post("https://biography-line-bot.onrender.com/auth", {code: code})
+            axios.post("https://line-bot-server.vercel.app/auth", {code: code})
             .then((response) => {
                 if (response.status === 200){
                     setToken(response.data);

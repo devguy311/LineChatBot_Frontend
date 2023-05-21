@@ -23,7 +23,7 @@ const Home = () => {
         <div className='home'>
             <div className="content">
                 <div className="title">
-                    <a>LINE<br />de<br />AI自叙伝</a>
+                    <a>AI<br />自叙伝<br />くん</a>
                 </div>
                 <Button className='linebutton' onClick={loginWithLine} variant='contained' startIcon={<LineIcon />} component={Link}>
                     <div style={{ width: '214px' }}>
