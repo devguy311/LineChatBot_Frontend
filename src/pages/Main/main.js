@@ -1,25 +1,36 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect} from 'react'
 import { Button } from '@mui/material';
 import './main.css';
 import { Avatar, TextField } from "@mui/material";
 import NoteIcon from '../../components/noteicon';
 import BackIcon from '../../components/backicon';
 import useToken from '../hooks/useToken';
+import useUndoableState from '../hooks/useUndoableState';
 import axios from "axios";
+
 import CloudUpdateIcon from '../../components/cloudupdate';
 
 const Main = () => {
-
-    const [textData, setTextData] = useState();
     const { token } = useToken();
     const [isEdit, setIsEdit] = useState(false);
-    const textFieldRef = useRef(null);
+
+    const {
+        state: doc,
+        setState: setDoc,
+        resetState: resetDoc,
+        index: docStateIndex,
+        lastIndex: docStateLastIndex,
+        goBack: undoDoc,
+        goForward: redoDoc        
+    } = useUndoableState({text: ""}, 500);
+
+    const canUndo = docStateIndex > 0;
 
     // eslint-disable-next-line
     useEffect(() => {
         axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
-                setTextData(result.data.msg);
+                setDoc(result.data.msg);
             }
         })
     }, []);
@@ -27,7 +38,7 @@ const Main = () => {
     const handleEdit = () => {
 
         if (isEdit) {
-            axios.post('https://linebotserver.vercel.app/bio/updateBiography', { sub: token[3], bio: textData })
+            axios.post('https://linebotserver.vercel.app/bio/updateBiography', { sub: token[3], bio: doc.text })
                 .then((response) => {
                     if (response.status === 200) {
                         console.log("!");
@@ -41,41 +52,10 @@ const Main = () => {
         setIsEdit(!isEdit);
     }
 
-    const handleChanged = (e) => {
-        setTextData(e.target.value);
-    }
-
-    const handleClickDelete = () => {
-        const textField = textFieldRef.current;
-
-        if (textField.selectionStart !== textField.selectionEnd) {
-            // If there is selected text, delete the selected portion
-            const start = textField.selectionStart;
-            const end = textField.selectionEnd;
-            const value = textField.value;
-
-            const newValue = value.slice(0, start) + value.slice(end);
-            textField.value = newValue;
-            textField.selectionStart = start;
-            textField.selectionEnd = start;
-        } else if (textField.selectionStart > 0) {
-            // If no text is selected but the cursor is not at the beginning, delete the character to the left of the cursor
-            const start = textField.selectionStart - 1;
-            const value = textField.value;
-
-            const newValue = value.slice(0, start) + value.slice(start + 1);
-            textField.value = newValue;
-            textField.selectionStart = start;
-            textField.selectionEnd = start;
-        }
-        textField.focus();
-        setTextData(textField.value);
-    }
-
     const refreshBio = () => {
         axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
-                setTextData(result.data.msg);
+                setDoc(result.data.msg);
             }
         })
     }
@@ -100,7 +80,7 @@ const Main = () => {
                 <Button sx={{ color: "gray" }} onClick={refreshBio}>
                     <CloudUpdateIcon />&nbsp;
                 </Button>
-                <Button disabled={!isEdit} sx={{ color: "gray" }} onClick={handleClickDelete}>
+                <Button disabled={!canUndo} sx={{ color: "gray" }} onClick={undoDoc}>
                     <BackIcon />&nbsp;
                 </Button>
             </div>
@@ -108,7 +88,7 @@ const Main = () => {
                 {
                     isEdit === false ?
                         <p style={{ whiteSpace: 'pre-line', paddingLeft: '1rem', paddingRight: '1rem' }}>
-                            {textData}
+                            {doc.text}
                         </p>
                         :
                         <TextField
@@ -117,10 +97,9 @@ const Main = () => {
                             fullWidth
                             multiline
                             variant="outlined"
-                            value={textData}
-                            inputRef={textFieldRef}
+                            value={doc.text}
                             sx={{ backgroundColor: 'white' }}
-                            onChange={(e) => handleChanged(e)}
+                            onChange={(e) => setDoc({text: e.target.value})}
                         />
                 }
             </div>
