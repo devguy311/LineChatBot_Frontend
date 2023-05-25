@@ -34,6 +34,7 @@ const useUndoableState = (init, debouncePeriod) => {
     }
 
     const goBack = (steps = 1) => {
+        console.log(state);
         const newIndex = Math.max(0, Number(index) - (Number(steps) || 1));
         setIndex(newIndex);
         setRawState(states[newIndex]);

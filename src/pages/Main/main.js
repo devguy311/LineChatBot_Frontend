@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button } from '@mui/material';
 import './main.css';
 import { Avatar, TextField } from "@mui/material";
@@ -21,16 +21,16 @@ const Main = () => {
         index: docStateIndex,
         lastIndex: docStateLastIndex,
         goBack: undoDoc,
-        goForward: redoDoc        
-    } = useUndoableState({text: ""}, 500);
+        goForward: redoDoc
+    } = useUndoableState({ text: "" }, 500);
 
     const canUndo = docStateIndex > 0;
 
     // eslint-disable-next-line
     useEffect(() => {
-        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: 'U7751c8ead82ba0979c0a788b715b13a1' } }).then((result) => {
             if (result.status === 200) {
-                setDoc(result.data.msg);
+                setDoc({ text: result.data.msg });
             }
         })
     }, []);
@@ -53,9 +53,9 @@ const Main = () => {
     }
 
     const refreshBio = () => {
-        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: 'U7751c8ead82ba0979c0a788b715b13a1' } }).then((result) => {
             if (result.status === 200) {
-                setDoc(result.data.msg);
+                setDoc({ text: result.data.msg });
             }
         })
     }
@@ -80,7 +80,7 @@ const Main = () => {
                 <Button sx={{ color: "gray" }} onClick={refreshBio}>
                     <CloudUpdateIcon />&nbsp;
                 </Button>
-                <Button disabled={!canUndo} sx={{ color: "gray" }} onClick={undoDoc}>
+                <Button disabled={!canUndo} sx={{ color: "gray" }} onClick={() => undoDoc()}>
                     <BackIcon />&nbsp;
                 </Button>
             </div>
@@ -99,7 +99,7 @@ const Main = () => {
                             variant="outlined"
                             value={doc.text}
                             sx={{ backgroundColor: 'white' }}
-                            onChange={(e) => setDoc({text: e.target.value})}
+                            onChange={(e) => setDoc({ text: e.target.value })}
                         />
                 }
             </div>
