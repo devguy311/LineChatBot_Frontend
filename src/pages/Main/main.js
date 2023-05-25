@@ -28,7 +28,7 @@ const Main = () => {
 
     // eslint-disable-next-line
     useEffect(() => {
-        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: 'U7751c8ead82ba0979c0a788b715b13a1' } }).then((result) => {
+        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
                 setDoc({ text: result.data.msg });
             }
@@ -53,7 +53,7 @@ const Main = () => {
     }
 
     const refreshBio = () => {
-        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: 'U7751c8ead82ba0979c0a788b715b13a1' } }).then((result) => {
+        axios.get("https://linebotserver.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
                 setDoc({ text: result.data.msg });
             }
