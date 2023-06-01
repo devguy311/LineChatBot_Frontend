@@ -28,7 +28,7 @@ const Main = () => {
 
     // eslint-disable-next-line
     useEffect(() => {
-        axios.get("https://linebotserver-two.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+        axios.get("https://linebot-theta-inky.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
                 setDoc({ text: result.data.msg });
             }
@@ -38,7 +38,7 @@ const Main = () => {
     const handleEdit = () => {
 
         if (isEdit) {
-            axios.post('https://linebotserver-two.vercel.app/bio/updateBiography', { sub: token[3], bio: doc.text })
+            axios.post('https://linebot-theta-inky.vercel.app/bio/updateBiography', { sub: token[3], bio: doc.text })
                 .then((response) => {
                     if (response.status === 200) {
                         console.log("!");
@@ -53,7 +53,7 @@ const Main = () => {
     }
 
     const refreshBio = () => {
-        axios.get("https://linebotserver-two.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
+        axios.get("https://linebot-theta-inky.vercel.app/bio/getBiography", { params: { sub: token[3] } }).then((result) => {
             if (result.status === 200) {
                 setDoc({ text: result.data.msg });
             }

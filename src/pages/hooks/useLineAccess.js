@@ -12,7 +12,7 @@ const useLineAccess = (code) => {
     useEffect(() => {
         if (!loaded && code !== undefined && code !== null && code !== "") {
             loaded = true;
-            axios.post("https://linebotserver-two.vercel.app/auth", {code: code})
+            axios.post("https://linebot-theta-inky.vercel.app/auth", {code: code})
             .then((response) => {
                 if (response.status === 200){
                     setToken(response.data);
